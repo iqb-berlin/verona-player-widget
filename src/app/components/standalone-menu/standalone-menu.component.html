@@ -1,0 +1,11 @@
+<div class="standalone-menu">
+    <div cdkMenuBar>
+        <button class="menu-bar-item" cdkMenuItem [cdkMenuTriggerFor]="file">load</button>
+    </div>
+    <ng-template #file>
+        <div class="menu" cdkMenu>
+            <button class="menu-item" cdkMenuItem (cdkMenuItemTriggered)="load()">from file</button>
+            <button class="menu-item" cdkMenuItem (cdkMenuItemTriggered)="handleDummy()">edit</button>
+        </div>
+    </ng-template>
+</div>
