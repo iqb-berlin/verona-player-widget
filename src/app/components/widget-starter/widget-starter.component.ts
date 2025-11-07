@@ -19,6 +19,10 @@ export class WidgetStarterComponent {
     }
     this.veronaPostService.sendVopWidgetCall({
       callId: this.unitService.callId,
+      parameters: {
+        MODE: 'SIMPLE',
+        JOURNAL_LINES: '0',
+      },
       widgetType: 'WIDGET_CALC'
     });
   }
