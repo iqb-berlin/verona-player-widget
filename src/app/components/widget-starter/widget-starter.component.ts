@@ -3,7 +3,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { VeronaPostService } from '../../../../verona/src/lib/player/verona-post.service';
 import { UnitService } from '../../services/unit.service';
 import { ResponseService } from '../../services/response.service';
-import { WidgetType } from '../../../../verona/src/lib/verona.interfaces';
 
 @Component({
   selector: 'widget-starter',
@@ -26,11 +25,9 @@ export class WidgetStarterComponent implements OnInit {
     }
     const widgetCall = {
       callId: this.unitService.callId,
-      parameters: {
-        MODE: 'SIMPLE',
-        JOURNAL_LINES: '0',
-      },
-      widgetType: 'WIDGET_CALC' as WidgetType
+      widgetType: this.unitService.widgetType,
+      parameters: this.unitService.parameters,
+      sharedParameters: this.unitService.sharedParameters
     };
     console.log('sending VopWidgetCall', widgetCall);
     this.veronaPostService.sendVopWidgetCall(widgetCall);

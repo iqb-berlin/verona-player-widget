@@ -1,0 +1,23 @@
+{
+  "id": "widget-unit-definition",
+  "version": "0.1.0",
+  "backgroundColor": "#3cf",
+  "continueButtonShow": "ALWAYS",
+  "widgetType": "WIDGET_MOLECULE_EDITOR",
+  "parameters": {},
+  "sharedParameters": {
+    "BONDING_TYPE": {
+      "type": "enum",
+      "description": "Speichert die Darstellungsformen von Bindungen.",
+      "values": [
+        "VALENCE",
+        "ELECTRONS"
+      ],
+      "defaultValue": "ELECTRONS"
+    }
+  },
+  "returnState": {
+    "type": "json",
+    "description": "JSON-Objekt, zZt wird mit 'asImage' ein Bild des Moleküls als base64 übergeben."
+  }
+}

@@ -11,13 +11,13 @@
       "values": [
         "SIMPLE",
         "SCIENTIFIC"
-      ]  ,
+      ],
       "defaultValue": "SIMPLE"
     },
     "JOURNAL_LINES" : {
       "type": "number",
       "description": "Legt fest, wie viele vorherige Rechenoperationen/Eingaben angezeigt werden sollen.",
-      "defaultValue": 0
+      "defaultValue": "0"
     }
   },
   "sharedParameters": {},
