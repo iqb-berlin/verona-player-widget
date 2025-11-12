@@ -7,6 +7,7 @@ import { MetadataService } from './services/metadata.service';
 import { UnitService } from './services/unit.service';
 import { StandaloneMenuComponent } from './components/standalone-menu/standalone-menu.component';
 import { WidgetStarterComponent } from './components/widget-starter/widget-starter.component';
+import { ResponseService } from './services/response.service';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ export class App implements OnInit {
   veronaSubscriptionService = inject(VeronaSubscriptionService);
   metaDataService = inject(MetadataService);
   unitService = inject(UnitService);
+  responseService = inject(ResponseService);
 
   ngOnInit() {
     this.veronaSubscriptionService.vopStartCommand
@@ -37,9 +39,29 @@ export class App implements OnInit {
     this.veronaSubscriptionService.vopWidgetReturn
       .subscribe(vopWidgetReturn => {
         console.log('received vopWidgetReturn', vopWidgetReturn);
+        if (vopWidgetReturn.callId === this.unitService.callId) {
+          this.responseService.setState(vopWidgetReturn.state);
+          this.responseService.setResponseStatus('complete');
+          const unitState = {
+            dataParts: {
+              response: JSON.stringify(this.responseService.getResponses())
+            },
+            responseProgress: this.responseService.responseStatus(),
+            presentationProgress: this.responseService.presentationStatus()
+          };
+          console.log('sending VopStateChangedNotification', unitState);
+          this.veronaPostService.sendVopStateChangedNotification({
+            unitState: unitState
+          })
+        }
       })
     this.isStandalone = window === window.parent;
     console.log('sending VopReadyNotification', this.metaDataService.playerMetadata);
     this.veronaPostService.sendVopReadyNotification(this.metaDataService.playerMetadata);
+  }
+
+  continue() {
+    console.log('sending VopUnitNavigationRequestedNotification', 'next');
+    this.veronaPostService.sendVopUnitNavigationRequestedNotification('next')
   }
 }

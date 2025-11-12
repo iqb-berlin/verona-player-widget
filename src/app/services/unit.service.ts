@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 import { UnitDefinition } from '../models/unit-definition';
 
@@ -8,6 +8,9 @@ import { UnitDefinition } from '../models/unit-definition';
 
 export class UnitService {
   callId = '';
+
+  private _continueButton = signal('ALWAYS');
+  continueButton = this._continueButton.asReadonly();
 
   reset() {
     this.callId = '';

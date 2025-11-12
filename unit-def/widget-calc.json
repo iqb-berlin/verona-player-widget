@@ -1,0 +1,28 @@
+{
+  "id": "widget-unit-definition",
+  "version": "0.1.0",
+  "backgroundColor": "#3cf",
+  "continueButtonShow": "ALWAYS",
+  "widgetType": "WIDGET_CALC",
+  "parameters": {
+    "MODE": {
+      "type": "enum",
+      "description": "Legt die verfügbaren Funktionen fest.",
+      "values": [
+        "SIMPLE",
+        "SCIENTIFIC"
+      ]  ,
+      "defaultValue": "SIMPLE"
+    },
+    "JOURNAL_LINES" : {
+      "type": "number",
+      "description": "Legt fest, wie viele vorherige Rechenoperationen/Eingaben angezeigt werden sollen.",
+      "defaultValue": 0
+    }
+  },
+  "sharedParameters": {},
+  "returnState": {
+    "type": "number",
+    "description": "Das Ergebnis der Rechenoperation."
+  }
+}

@@ -1,7 +1,11 @@
 {
   "name": "verona-player-widget",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iqb-berlin/verona-player-widget"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

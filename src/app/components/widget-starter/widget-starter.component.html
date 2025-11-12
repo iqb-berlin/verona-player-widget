@@ -1,1 +1,5 @@
 <button (click)="openWidget()">Open Widget</button>
+
+@if (responseService.state().length > 0) {
+    <h3>Widget Return: <span>{{responseService.state()}}</span></h3>
+}
