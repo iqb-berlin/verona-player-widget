@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { VeronaPostService } from '../../verona/src/lib/player/verona-post.service';
 import { VeronaSubscriptionService } from '../../verona/src/lib/player/verona-subscription.service';
@@ -17,7 +17,6 @@ import { ResponseService } from './services/response.service';
 })
 
 export class App implements OnInit {
-  protected readonly title = signal('verona-player-dummy');
   isStandalone = false;
 
   veronaPostService = inject(VeronaPostService);

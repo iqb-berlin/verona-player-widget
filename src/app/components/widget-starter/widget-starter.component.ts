@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 
 import { VeronaPostService } from '../../../../verona/src/lib/player/verona-post.service';
 import { UnitService } from '../../services/unit.service';
@@ -15,6 +15,16 @@ export class WidgetStarterComponent implements OnInit {
   unitService = inject(UnitService);
   responseService = inject(ResponseService);
 
+  parameterKeys:string[] = [];
+
+  constructor() {
+    effect(() => {
+      this.parameterKeys = Object.keys(this.unitService.parameters());
+      console.log('parameter changed', this.unitService.parameters());
+      console.log('parameterKeys' , this.parameterKeys);
+    });
+  }
+
   ngOnInit() {
     this.responseService.setPresentationStatus('complete');
   }
@@ -25,11 +35,15 @@ export class WidgetStarterComponent implements OnInit {
     }
     const widgetCall = {
       callId: this.unitService.callId,
-      widgetType: this.unitService.widgetType,
-      parameters: this.unitService.parameters,
-      sharedParameters: this.unitService.sharedParameters
+      widgetType: this.unitService.widgetType(),
+      parameters: this.unitService.getPlainParameters(),
+      sharedParameters: this.unitService.getPlainSharedParameters()
     };
     console.log('sending VopWidgetCall', widgetCall);
     this.veronaPostService.sendVopWidgetCall(widgetCall);
+  }
+
+  changeParameter(event) {
+    this.unitService.setParameter(event.target.id, event.target.value);
   }
 }

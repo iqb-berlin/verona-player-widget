@@ -1,5 +1,45 @@
 <button (click)="openWidget()">Open Widget</button>
 
+@if (parameterKeys.length > 0) {
+    <h3>Widget Parameters:</h3>
+    <div class="var-data-header flex-row">
+        <div [style.flex]="'0 0 200px'">Key</div>
+        <div [style.flex]="'0 0 150px'">Value</div>
+        <div [style.flex]="'0 0 350px'">Description</div>
+    </div>
+    @for (key of parameterKeys; track $index) {
+        <div class="var-data flex-row">
+            <label [style.flex]="'0 0 200px'">{{key}}</label>
+            <div [style.flex]="'0 0 150px'">
+                @if (unitService.parameters()[key].type === "ENUM") {
+                    <select [id]="key"
+                            (change)="changeParameter($event)">
+                        @for (value of unitService.parameters()[key].values; track $index) {
+                            <option [value]="value"
+                                    [selected]="unitService.parameters()[key].defaultValue === value">
+                                {{value}}
+                            </option>
+                        }
+                    </select>
+                } @if (unitService.parameters()[key].type === "NUMBER") {
+                    <input [id]="key"
+                           (change)="changeParameter($event)"
+                           type="number"
+                           [value]="unitService.parameters()[key].defaultValue">
+                } @if (unitService.parameters()[key].type === "BOOLEAN") {
+                    <input [id]="key"
+                           type="checkbox"
+                           (change)="changeParameter($event)"
+                           [checked]="unitService.parameters()[key].defaultValue == 1">
+                }
+            </div>
+            <div [style.flex]="'0 0 350px'">{{unitService.parameters()[key].description}}</div>
+        </div>
+    }
+} @else {
+    <h3>No Parameters</h3>
+}
+
 @if (responseService.state().length > 0) {
     <h3>Widget Return: <span>{{responseService.state()}}</span></h3>
 }

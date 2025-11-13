@@ -10,14 +10,23 @@ import { WidgetType } from '../../../verona/src/lib/verona.interfaces';
 export class UnitService {
   callId = '';
 
-  widgetType: WidgetType;
-  parameters: Record<string, string> = {};
-  sharedParameters: Record<string, string> = {};
+  private _title = signal('Verona Player Widget');
+  title = this._title.asReadonly();
+  private _description = signal('');
+  description = this._description.asReadonly();
 
   private _continueButton = signal('ALWAYS');
   continueButton = this._continueButton.asReadonly();
   private _backgroundColor = signal('ALWAYS');
   backgroundColor = this._backgroundColor.asReadonly();
+
+  private _widgetType = signal<WidgetType | undefined>(undefined);
+  widgetType = this._widgetType.asReadonly();
+  private _parameters = signal<Record<string, any>>({});
+  parameters = this._parameters.asReadonly();
+  private _sharedParameters = signal<Record<string, any>>({});
+  sharedParameters = this._sharedParameters.asReadonly();
+
 
   reset() {
     this.callId = '';
@@ -35,12 +44,34 @@ export class UnitService {
     if (def.continueButtonShow) {
       this._continueButton.set(def.continueButtonShow);
     }
-    this.widgetType = def.widgetType as WidgetType;
-    Object.keys(def.parameters).forEach(key => {
-      this.parameters[key] = def.parameters[key]?.defaultValue || '';
+    this._widgetType.set(def.widgetType as WidgetType);
+    this._parameters.set(def.parameters);
+    this._sharedParameters.set(def.sharedParameters);
+    this._title.set(def.title);
+    this._description.set(def.description || '');
+  }
+
+  getPlainParameters() {
+    let parameters: Record<string, string> = {};
+    Object.keys(this.parameters()).forEach(key => {
+      parameters[key] = this.parameters()[key]?.defaultValue || '';
     });
-    Object.keys(def.sharedParameters).forEach(key => {
-      this.sharedParameters[key] = def.sharedParameters[key]?.defaultValue || '';
+    return parameters;
+  }
+
+  getPlainSharedParameters() {
+    let sharedParameters: Record<string, string> = {};
+    Object.keys(this.sharedParameters()).forEach(key => {
+      sharedParameters[key] = this.sharedParameters()[key]?.defaultValue || '';
     });
+    return sharedParameters;
+  }
+
+  setParameter(key: string, value:string) {
+    let parameters = this.parameters();
+    if (parameters[key]) {
+      parameters[key].defaultValue = value;
+    }
+    this._parameters.set(parameters);
   }
 }

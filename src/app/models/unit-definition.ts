@@ -6,6 +6,8 @@ export interface UnitDefinition {
   backgroundColor?: string;
   continueButtonShow?: 'ALWAYS';
   widgetType: WidgetTypeEnum;
+  title: string;
+  description?: string;
   parameters?: Record<string, any>;
   sharedParameters?: Record<string, any>;
 }
