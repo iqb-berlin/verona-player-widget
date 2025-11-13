@@ -40,6 +40,47 @@
     <h3>No Parameters</h3>
 }
 
+@if (sharedParameterKeys.length > 0) {
+    <h3>Shared Parameters:</h3>
+    <div class="var-data-header flex-row">
+        <div [style.flex]="'0 0 200px'">Key</div>
+        <div [style.flex]="'0 0 150px'">Value</div>
+        <div [style.flex]="'0 0 350px'">Description</div>
+    </div>
+    @for (key of sharedParameterKeys; track $index) {
+        <div class="var-data flex-row">
+            <label [style.flex]="'0 0 200px'">{{key}}</label>
+            <div [style.flex]="'0 0 150px'">
+                @if (unitService.sharedParameters()[key].type === "ENUM") {
+                    <select [id]="key"
+                            (change)="changeParameter($event)">
+                        @for (value of unitService.sharedParameters()[key].values; track $index) {
+                            <option [value]="value"
+                                    [selected]="unitService.sharedParameters()[key].defaultValue === value">
+                                {{value}}
+                            </option>
+                        }
+                    </select>
+                } @if (unitService.sharedParameters()[key].type === "NUMBER") {
+                <input [id]="key"
+                       (change)="changeParameter($event)"
+                       type="number"
+                       [value]="unitService.sharedParameters()[key].defaultValue">
+            } @if (unitService.sharedParameters()[key].type === "BOOLEAN") {
+                <input [id]="key"
+                       type="checkbox"
+                       (change)="changeParameter($event)"
+                       [checked]="unitService.sharedParameters()[key].defaultValue == 1">
+            }
+            </div>
+            <div [style.flex]="'0 0 350px'">{{unitService.sharedParameters()[key].description}}</div>
+        </div>
+    }
+} @else {
+    <h3>No Shared Parameters</h3>
+}
+
+
 @if (responseService.state().length > 0) {
     <h3>Widget Return: <span>{{responseService.state()}}</span></h3>
 }

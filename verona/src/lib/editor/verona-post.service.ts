@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 import {
   ModuleDependency,
@@ -6,18 +6,22 @@ import {
   VeronaMetaData,
   VoeDefinitionChangedNotification,
   VoeMessage
-} from "../verona.interfaces";
+} from '../verona.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class VeronaPostService {
-  sessionID: string | undefined;
+  private sessionID: string | undefined = undefined;
   private postTarget: Window = window.parent;
 
   setPostTarget(postTarget: Window): void {
     this.postTarget = postTarget;
+  }
+
+  setSessionID(sessionID: string): void {
+    this.sessionID = sessionID;
   }
 
   private sendMessage(message: VoeMessage): void {
@@ -30,26 +34,16 @@ export class VeronaPostService {
     dependeciesToPlay?: ModuleDependency[],
     dependeciesToEdit?: ModuleDependency[],
     sharedParameters?: Record<string, string>,
-  }): void {
-    this.sendMessage(this.createVoeDefinitionChangedNotification(values));
-  }
-
-  private createVoeDefinitionChangedNotification(values: {
-    unitDefinition?: string,
-    variables?: VariableInfo[],
-    dependeciesToPlay?: ModuleDependency[],
-    dependeciesToEdit?: ModuleDependency[],
-    sharedParameters?: Record<string, string>
-  }): VoeDefinitionChangedNotification {
+  }):  VoeDefinitionChangedNotification {
     return {
       type: 'voeDefinitionChangedNotification',
-      sessionId: this.sessionID as string,
+      sessionId: this.sessionID as string || '',
       timeStamp: Date.now().toString(),
       ...(values)
     };
   }
 
-  sendReadyNotification(playerMetadata: VeronaMetaData): void {
+  sendVoeReadyNotification(playerMetadata: VeronaMetaData): void {
     this.sendMessage({
       type: 'voeReadyNotification',
       metadata: playerMetadata

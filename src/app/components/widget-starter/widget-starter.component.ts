@@ -16,12 +16,15 @@ export class WidgetStarterComponent implements OnInit {
   responseService = inject(ResponseService);
 
   parameterKeys:string[] = [];
+  sharedParameterKeys:string[] = [];
 
   constructor() {
     effect(() => {
       this.parameterKeys = Object.keys(this.unitService.parameters());
-      console.log('parameter changed', this.unitService.parameters());
-      console.log('parameterKeys' , this.parameterKeys);
+    });
+    effect(() => {
+      console.log('sharedParameters', this.unitService.sharedParameters());
+      this.sharedParameterKeys = Object.keys(this.unitService.sharedParameters());
     });
   }
 
