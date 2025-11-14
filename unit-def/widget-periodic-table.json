@@ -15,7 +15,7 @@
     "SHOW_INFO_E_NEG": {
       "type": "BOOLEAN",
       "description": "Anzeige der Elektronegativität.",
-      "defaultValue": "1"
+      "defaultValue": "0"
     },
     "SHOW_INFO_A_MASS": {
       "type": "BOOLEAN",
@@ -30,7 +30,7 @@
     "MAX_NUMBER_OF_SELECTIONS": {
       "type": "NUMBER",
       "description": "Maximale Anzahl der anwählbaren Elemente. 0 -> unbegrenzt.",
-      "defaultValue": "3"
+      "defaultValue": "1"
     }
   },
   "sharedParameters": {},
