@@ -1,9 +1,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/iqb-berlin/verona-modules-nemo?style=flat-square)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/iqb-berlin/verona-player-widget?style=flat-square)
 
 # IQB Widget Player
 
-Demo player implementing verona widget calls
+Demo player implementing verona widget calls.
+
+Use the unit definitions in unit-def folder to test the player. Simple GUI to change the widget parameters is provided.
+Response Value will be displayed in the player. Verona communication will be displayed in the console.
 
 
 ## Development server
