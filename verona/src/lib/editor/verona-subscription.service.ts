@@ -26,7 +26,7 @@ export class VeronaSubscriptionService {
         this._voeStartCommand.next(messageData);
         break;
       default:
-        console.warn(`player: got message of unknown type ${messageData.type}`);
+        console.error(`editor: got message of unknown type ${messageData.type}`);
     }
   }
 
