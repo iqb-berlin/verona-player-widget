@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
 import { UnitDefinition } from '../models/unit-definition';
-import { WidgetType } from '../../../verona/src/lib/verona.interfaces';
+import { SharedParameter, WidgetParameter, WidgetType } from '../../../verona/src/lib/verona.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -51,18 +51,26 @@ export class UnitService {
     this._description.set(def.description || '');
   }
 
-  getPlainParameters() {
-    let parameters: Record<string, string> = {};
+  getPlainParameters(): WidgetParameter[] {
+    let parameters: WidgetParameter[] = new Array<WidgetParameter>();
     Object.keys(this.parameters()).forEach(key => {
-      parameters[key] = this.parameters()[key]?.defaultValue || '';
+      const newParameter = {
+        key: key,
+        value: this.parameters()[key]?.defaultValue || ''
+      }
+      parameters.push(newParameter);
     });
     return parameters;
   }
 
-  getPlainSharedParameters() {
-    let sharedParameters: Record<string, string> = {};
+  getSharedParameters(): SharedParameter[] {
+    let sharedParameters: SharedParameter[] = new Array<SharedParameter>();
     Object.keys(this.sharedParameters()).forEach(key => {
-      sharedParameters[key] = this.sharedParameters()[key]?.defaultValue || '';
+      const newParameter = {
+        key: key,
+        value: this.sharedParameters()[key]?.defaultValue || ''
+      }
+      sharedParameters.push(newParameter);
     });
     return sharedParameters;
   }

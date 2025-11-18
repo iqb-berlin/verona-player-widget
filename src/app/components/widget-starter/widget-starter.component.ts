@@ -37,10 +37,11 @@ export class WidgetStarterComponent implements OnInit {
       this.unitService.callId = Math.floor(Math.random() * 20000000 + 10000000).toString();
     }
     const widgetCall = {
-      callId: this.unitService.callId,
+      callId: this.unitService.callId || '',
       widgetType: this.unitService.widgetType(),
       parameters: this.unitService.getPlainParameters(),
-      sharedParameters: this.unitService.getPlainSharedParameters()
+      sharedParameters: this.unitService.getSharedParameters(),
+      state: this.responseService.state()
     };
     console.log('sending VopWidgetCall', widgetCall);
     this.veronaPostService.sendVopWidgetCall(widgetCall);
