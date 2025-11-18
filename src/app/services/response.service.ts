@@ -12,6 +12,8 @@ export class ResponseService {
   responseStatus = this._responseStatus.asReadonly();
   private _state = signal('');
   state = this._state.asReadonly();
+  private _stateAsImage = signal('');
+  stateAsImage = this._stateAsImage.asReadonly();
 
   setPresentationStatus(v: Progress) {
     this._presentationStatus.set(v);
@@ -23,6 +25,12 @@ export class ResponseService {
 
   setState(v: string) {
     this._state.set(v);
+    let stateAsJson = JSON.parse(v);
+    if (stateAsJson?.hasOwnProperty('asImage')) {
+      this._stateAsImage.set(stateAsJson.asImage);
+    } else {
+      this._stateAsImage.set('');
+    }
   }
 
   getResponses() {

@@ -82,5 +82,12 @@
 
 
 @if (responseService.state().length > 0) {
-    <h3>Widget Return: <span>{{responseService.state()}}</span></h3>
+    @if (unitService.widgetType() === "WIDGET_CALC" || unitService.widgetType() === "WIDGET_PERIODIC_TABLE") {
+        <h3>Widget Return: <span>{{responseService.state()}}</span></h3>
+    } @else if (unitService.widgetType() === "WIDGET_MOLECULE_EDITOR"){
+        <h3>Widget Return:</h3>
+        <div class="image-wrapper">
+            <img src="{{responseService.stateAsImage()}}">
+        </div>
+    }
 }

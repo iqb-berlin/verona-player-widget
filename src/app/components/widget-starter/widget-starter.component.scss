@@ -29,3 +29,13 @@ button {
   gap: 10px;
   padding: 5px 0;
 }
+
+.image-wrapper {
+  width: 50%;
+
+  img {
+    width: 100%;
+    height: auto;
+    max-height: 350px;
+  }
+}
