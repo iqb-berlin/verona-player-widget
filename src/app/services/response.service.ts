@@ -25,7 +25,11 @@ export class ResponseService {
 
   setState(v: string) {
     this._state.set(v);
-    let stateAsJson = JSON.parse(v);
+    let stateAsJson: any;
+    try{
+      stateAsJson = JSON.parse(v);
+    } catch (e) {
+    }
     if (stateAsJson?.hasOwnProperty('asImage')) {
       this._stateAsImage.set(stateAsJson.asImage);
     } else {
