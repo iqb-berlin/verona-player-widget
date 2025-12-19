@@ -40,7 +40,6 @@ export class WidgetStarterComponent implements OnInit {
       callId: this.unitService.callId || '',
       widgetType: this.unitService.widgetType(),
       parameters: this.unitService.getPlainParameters(),
-      sharedParameters: this.unitService.getSharedParameters(),
       state: this.responseService.state()
     };
     console.log('sending VopWidgetCall', widgetCall);
@@ -49,5 +48,9 @@ export class WidgetStarterComponent implements OnInit {
 
   changeParameter(event) {
     this.unitService.setParameter(event.target.id, event.target.value);
+  }
+
+  changeCheckboxParameter(event) {
+    this.unitService.setParameter(event.target.id, event.target.checked ? '1' : '0');
   }
 }

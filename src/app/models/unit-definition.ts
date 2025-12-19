@@ -9,5 +9,5 @@ export interface UnitDefinition {
   title: string;
   description?: string;
   parameters?: Record<string, any>;
-  sharedParameters?: Record<string, any>;
+  sharedParameters?: Record<string, any>[];
 }

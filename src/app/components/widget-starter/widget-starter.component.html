@@ -29,7 +29,7 @@
                 } @if (unitService.parameters()[key].type === "BOOLEAN") {
                     <input [id]="key"
                            type="checkbox"
-                           (change)="changeParameter($event)"
+                           (change)="changeCheckboxParameter($event)"
                            [checked]="unitService.parameters()[key].defaultValue == 1">
                 }
             </div>

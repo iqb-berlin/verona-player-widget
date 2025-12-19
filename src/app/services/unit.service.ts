@@ -24,7 +24,7 @@ export class UnitService {
   widgetType = this._widgetType.asReadonly();
   private _parameters = signal<Record<string, any>>({});
   parameters = this._parameters.asReadonly();
-  private _sharedParameters = signal<Record<string, any>>({});
+  private _sharedParameters = signal<Record<string, any>[]>([]);
   sharedParameters = this._sharedParameters.asReadonly();
 
 
