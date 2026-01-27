@@ -51,29 +51,29 @@
         <div class="var-data flex-row">
             <label [style.flex]="'0 0 200px'">{{key}}</label>
             <div [style.flex]="'0 0 150px'">
-                @if (unitService.sharedParameters()[key].type === "ENUM") {
+                @if (unitService.sharedParameterDefs()[key].type === "ENUM") {
                     <select [id]="key"
-                            (change)="changeParameter($event)">
-                        @for (value of unitService.sharedParameters()[key].values; track $index) {
+                            (change)="changeSharedParameter($event)">
+                        @for (value of unitService.sharedParameterDefs()[key].values; track $index) {
                             <option [value]="value"
-                                    [selected]="unitService.sharedParameters()[key].defaultValue === value">
+                                    [selected]="unitService.sharedParameterDefs()[key].defaultValue === value">
                                 {{value}}
                             </option>
                         }
                     </select>
-                } @if (unitService.sharedParameters()[key].type === "NUMBER") {
+                } @if (unitService.sharedParameterDefs()[key].type === "NUMBER") {
                 <input [id]="key"
-                       (change)="changeParameter($event)"
+                       (change)="changeSharedParameter($event)"
                        type="number"
-                       [value]="unitService.sharedParameters()[key].defaultValue">
-            } @if (unitService.sharedParameters()[key].type === "BOOLEAN") {
+                       [value]="unitService.sharedParameterDefs()[key].defaultValue">
+            } @if (unitService.sharedParameterDefs()[key].type === "BOOLEAN") {
                 <input [id]="key"
                        type="checkbox"
-                       (change)="changeParameter($event)"
-                       [checked]="unitService.sharedParameters()[key].defaultValue == 1">
+                       (change)="changeSharedCheckboxParameter($event)"
+                       [checked]="unitService.sharedParameterDefs()[key].defaultValue == 1">
             }
             </div>
-            <div [style.flex]="'0 0 350px'">{{unitService.sharedParameters()[key].description}}</div>
+            <div [style.flex]="'0 0 350px'">{{unitService.sharedParameterDefs()[key].description}}</div>
         </div>
     }
 } @else {

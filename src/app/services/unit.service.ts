@@ -24,8 +24,10 @@ export class UnitService {
   widgetType = this._widgetType.asReadonly();
   private _parameters = signal<Record<string, any>>({});
   parameters = this._parameters.asReadonly();
-  private _sharedParameters = signal<Record<string, any>[]>([]);
+  private _sharedParameters = signal<SharedParameter[]>([]);
   sharedParameters = this._sharedParameters.asReadonly();
+  private _sharedParameterDefs = signal<Record<string, any>[]>([]);
+  sharedParameterDefs = this._sharedParameterDefs.asReadonly();
 
 
   reset() {
@@ -46,7 +48,10 @@ export class UnitService {
     }
     this._widgetType.set(def.widgetType as WidgetType);
     this._parameters.set(def.parameters);
-    this._sharedParameters.set(def.sharedParameters);
+    if (def.sharedParameters && Array.isArray(def.sharedParameters)) {
+      this._sharedParameterDefs.set(def.sharedParameters);
+      this._sharedParameters.set(this.getSharedParameters());
+    }
     this._title.set(def.title);
     this._description.set(def.description || '');
   }
@@ -65,7 +70,7 @@ export class UnitService {
 
   getSharedParameters(): SharedParameter[] {
     let sharedParameters: SharedParameter[] = new Array<SharedParameter>();
-    Object.keys(this.sharedParameters()).forEach(key => {
+    Object.keys(this.sharedParameterDefs()).forEach(key => {
       const newParameter = {
         key: key,
         value: this.sharedParameters()[key]?.defaultValue || ''

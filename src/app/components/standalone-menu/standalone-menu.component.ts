@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   CdkMenu, CdkMenuBar, CdkMenuItem, CdkMenuTrigger
 } from '@angular/cdk/menu';
+import { Dialog } from '@angular/cdk/dialog';
 
 import { FileService } from '../../services/file.service';
 import { UnitService } from '../../services/unit.service';
+import { EditDialog } from './edit-dialog.component';
 
 @Component({
   selector: 'standalone-menu',
@@ -20,19 +22,32 @@ import { UnitService } from '../../services/unit.service';
 })
 
 export class StandaloneMenuComponent {
-  constructor(
-    public unitService: UnitService
-  ) { }
+  dialog = inject(Dialog);
+  unitService = inject(UnitService);
+
+  unitDefinitionAsString = '';
 
   async load(): Promise<void> {
     await FileService.loadFile(['.json', '.voud']).then(fileObject => {
-      const unitDefinition = JSON.parse(fileObject.content);
+      this.unitDefinitionAsString = fileObject.content;
+      const unitDefinition = JSON.parse(this.unitDefinitionAsString);
       this.unitService.setNewData(unitDefinition);
     });
   }
 
   // eslint-disable-next-line class-methods-use-this
-  handleDummy() {
-    alert('Dummy');
+  openEdit() {
+    const dialogRef = this.dialog.open(EditDialog, {
+      width: '800px',
+      height: '600px',
+      data: this.unitDefinitionAsString
+    });
+    dialogRef.closed.subscribe(result => {
+      if (result) {
+        this.unitDefinitionAsString = result as string;
+        const unitDefinition = JSON.parse(this.unitDefinitionAsString);
+        this.unitService.setNewData(unitDefinition);
+      }
+    });
   }
 }

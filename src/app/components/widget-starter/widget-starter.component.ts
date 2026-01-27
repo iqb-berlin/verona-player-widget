@@ -23,8 +23,10 @@ export class WidgetStarterComponent implements OnInit {
       this.parameterKeys = Object.keys(this.unitService.parameters());
     });
     effect(() => {
-      console.log('sharedParameters', this.unitService.sharedParameters());
-      this.sharedParameterKeys = Object.keys(this.unitService.sharedParameters());
+      this.unitService.sharedParameterDefs().forEach(para => {
+        const key = Object.keys(para)[0];
+        this.sharedParameterKeys.push(key);
+      });
     });
   }
 
@@ -40,10 +42,19 @@ export class WidgetStarterComponent implements OnInit {
       callId: this.unitService.callId || '',
       widgetType: this.unitService.widgetType(),
       parameters: this.unitService.getPlainParameters(),
-      state: this.responseService.state()
+      sharedParameters: this.unitService.sharedParameters(),
+      state: this.responseService.state() || ''
     };
     console.log('sending VopWidgetCall', widgetCall);
     this.veronaPostService.sendVopWidgetCall(widgetCall);
+  }
+
+  changeSharedParameter(event) {
+
+  }
+
+  changeSharedCheckboxParameter(event) {
+
   }
 
   changeParameter(event) {

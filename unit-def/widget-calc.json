@@ -22,7 +22,7 @@
       "defaultValue": "0"
     }
   },
-  "sharedParameters": {},
+  "sharedParameters": [],
   "returnState": {
     "type": "NUMBER",
     "description": "Das Ergebnis der Rechenoperation."

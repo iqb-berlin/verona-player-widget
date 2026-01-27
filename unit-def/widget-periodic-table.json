@@ -33,7 +33,7 @@
       "defaultValue": "1"
     }
   },
-  "sharedParameters": {},
+  "sharedParameters": [],
   "returnState": {
     "type": "STRING",
     "description": "Die ausgewählten Elemente als mit Leerzeichen getrennter String.."
